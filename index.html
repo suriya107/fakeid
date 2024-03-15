@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Instafeed on Your Website</title>
-	<style type="text/css">
-		a img{ 
-			width: 25%;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Profile Data</title>
 </head>
 <body>
-	<h1 style="text-align: center">Show Instagram Feed on your Website</h1>
-    	<div id="instafeed-container"></div>
+    <div id="profile-data">
+        <h2>Instagram Profile Data</h2>
+        <p><strong>Username:</strong> <span id="username"></span></p>
+        <p><strong>Followers:</strong> <span id="followers"></span></p>
+        <p><strong>Following:</strong> <span id="following"></span></p>
+    </div>
 
+    <script>
+        // Replace 'ACCESS_TOKEN' with your actual access token
+        const accessToken = 'IGQWRQM1pKYkNSQlpxRi1oSWEtbk5YZAE96NUtoaWk0OU1qa3JhSVduR1hjZA0kyMC1YbTFPUll2VmZAzMEMtY1FVbnpaZAEI0anl6cnVxbnlZAUk45MEtvS1dGZAlRUNjhCa2xybHRpUlJQMjVDcE1BUGVTVVN6T0djNncZD';
+        // Replace 'USERNAME' with the username whose profile data you want to fetch
+        const username = '_.suriya._74';
 
-
-	<script src="https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0rc1/src/instafeed.min.js"></script>
-	<script type="text/javascript">
-	var userFeed = new Instafeed({
-		get: 'user',
-		target: "instafeed-container",
-    	resolution: 'low_resolution',
-		accessToken: 'IGQWROUmNxNENJckVtRXhYZAVZAma0loTzlYRFVQajZAIUEhDaFNRSTNyby04bDV4TmtVNXMxc1hMenNkZAXFNa3cwMlV2NkI3YnNGODh1dVJJMjBXS0hIUDJ0UkNTd1ZA6Mnk1aHRjbWxXSk1uS1l1LTZAVQmRFMjJwMEEZD'
-	});
-	userFeed.run();
-	</script>
+        // Fetch profile data
+        fetch(`https://graph.instagram.com/${username}?fields=id,username,followers_count,follows_count&access_token=${accessToken}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('username').textContent = data.username;
+                document.getElementById('followers').textContent = data.followers_count;
+                document.getElementById('following').textContent = data.follows_count;
+            })
+            .catch(error => {
+                console.error('Error fetching Instagram profile data:', error);
+            });
+    </script>
 </body>
 </html>
